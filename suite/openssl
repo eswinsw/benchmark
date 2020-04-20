@@ -1,0 +1,20 @@
+bmname="openssl"
+distro="openssl"
+source=("https://github.com/openssl/openssl/archive/OpenSSL_1_1_1.tar.gz")
+description="OpenSSL is an open-source toolkit that implements SSL (Secure Sockets Layer) and TLS (Transport Layer Security) protocols. This test measures the RSA 4096-bit performance of OpenSSL."
+argument=('rsa4096')
+
+build() {
+    cd openssl-OpenSSL_1_1_1
+    ./config no-zlib
+    make -j $(nproc)
+}
+
+install() {
+    cd openssl-OpenSSL_1_1_1
+    cp apps/openssl $pkgdir
+}
+
+run_benchmark() {
+    openssl speed
+}

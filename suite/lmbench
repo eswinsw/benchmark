@@ -1,0 +1,22 @@
+bmname=lmbench
+description="A suite of simple, portable, ANSI/C microbenchmarks for UNIX/POSIX, measures latency and bandwidth."
+source=("https://github.com/intel/lmbench.git")
+deps=('libtirpc' 'libtirpc-devel')
+arguments=('mhz' 'par_mem')
+
+build() {
+	cd "$srcdir/$bmname"
+	CPPFLAGS+=" -I/usr/include/tirpc/" LDFLAGS+=" -ltirpc" make -j $(nproc)
+}
+
+install() {
+    if [ -d $srcdir/$bmname/bin/$(ls $srcdir/$bmname/bin/) ]; then
+	    cp -r $srcdir/$bmname/bin/$(ls $srcdir/$bmname/bin/)/* $pkgdir
+    else
+        cp -r $srcdir/$bmname/bin/* $pkgdir
+    fi
+}
+
+run_benchmark() {
+    $@
+}

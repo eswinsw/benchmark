@@ -1,0 +1,13 @@
+bmname="numpy"
+source=("https://github.com/numpy/numpy/archive/v1.18.2.tar.gz")
+description="Uses NumPy official benchmark suite to test the performance of NumPy"
+
+build() {
+    cd numpy-1.18.2
+    pip install asv Cython virtualenv
+    (cd benchmarks && asv machine --yes)
+}
+
+run_benchmark() {
+    python runtests.py --bench
+}
