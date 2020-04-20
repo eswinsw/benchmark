@@ -1,0 +1,17 @@
+bmname="ebizzy"
+source=('http://www.phoronix-test-suite.com/benchmark-files/ebizzy-0.3.tar.gz')
+description="A program to generate workloads resembling web server workloads."
+
+build() {
+    cd ebizzy-0.3/
+    cc -pthread -lpthread -O3 -o ebizzy ebizzy.c
+}
+
+install() {
+    cd ebizzy-0.3/
+    cp ebizzy $pkgdir/
+}
+
+run_benchmark() {
+    ebizzy -S 20
+}
