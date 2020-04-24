@@ -1,0 +1,16 @@
+bmname=coremark
+description="CoreMark's primary goals are simplicity and providing a method for testing only a processor's core features."
+source=("https://github.com/eembc/coremark.git")
+arguments=('1' '8')
+build() {
+    cd coremark
+}
+
+run_benchmark() {
+    make clean
+    make XCFLAGS="-DMULTITHREAD=$@ -DUSE_PTHREAD -lpthread"
+}
+
+parse_result() {
+    tail -n 1 run1.log
+}
