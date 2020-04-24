@@ -1,0 +1,16 @@
+bmname=coremark-pro
+description="The EEMBC CoreMark-PRO benchmark contains five prevalent integer workloads and four popular floating-point workloads."
+source=("https://github.com/eembc/coremark-pro.git")
+
+build() {
+    cd coremark-pro
+    make -j$(nproc) TARGET=linux64 build
+}
+
+run_benchmark() {
+    make TARGET=linux64 XCMD="-c$(nproc)" certify-all
+}
+
+parse_result() {
+    tail -n 22 $LOG_FILE | head -n 20
+}
