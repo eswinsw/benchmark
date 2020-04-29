@@ -1,0 +1,35 @@
+bmname=embench
+description="Embench is a suite of free and open source C benchmarks, all of which are small real-world programs suitable for running on deeply embedded systems with at least 64kB of ROM and 64kB of RAM."
+source=("https://github.com/embench/embench-iot.git")
+# arguments=()
+build() {
+    cd embench-iot
+    python build_all.py --arch native --board default --chip speed-test-gcc
+    python build_all.py --arch native --board default --chip size-test-gcc --ldflags="-lc"
+}
+
+run_benchmark() {
+    python benchmark_speed.py --target-module run_native
+    python benchmark_size.py
+}
+
+parse_result() {
+    suite=('aha-mont64', 'crc32' 'cubic' 'edn' 'huffbench' 'matmult-int' 'minver' 'nbody' 'nettle-aes' 'nettle-sha256' 'nsichneu' 'picojpeg' 'qrduino' 'sglib-combined' 'slre' 'st' 'statemate' 'ud' 'wikisort' 'Geometric mean' 'Geometric SD' 'Geometric range')
+    speed=($(head -n 21 $LOG_FILE | tail -n 19|awk '{print $2}'))
+    speed+=($(head -n 25 $LOG_FILE | tail -n 3|awk '{print $3}'))
+    size=($(head -n 47 $LOG_FILE | tail -n 19|awk '{print $2}'))
+    size+=($(head -n 51 $LOG_FILE | tail -n 3|awk '{print $3}'))
+
+    echo -e "Benchmark\tSpeed\tSize"
+    echo -e '---------\t-----\t-----'
+    for i in $(seq 22); do
+        if [ $i = 19 ]; then
+            echo -e "---------\t-----\t-----"
+        fi
+        if [ $i = 1 ] || [ $i = 2 ] || [ $i = 3 ] || [ $i = 6 ] || [ $i = 7 ] || [ $i = 12 ] || [ $i = 14 ] || [ $i = 15 ] || [ $i = 17 ]; then
+            echo -e "${suite[$i]}\t\t${speed[$i]}\t${size[$i]}"
+        else
+            echo -e "${suite[$i]}\t${speed[$i]}\t${size[$i]}"
+        fi
+    done
+}
