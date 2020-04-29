@@ -1,0 +1,20 @@
+bmname="glmark2"
+distro='glmark2'
+deps=("libpng12")
+source=("https://github.com/glmark2/glmark2.git")
+description="A solver for the N-queens problem with multi-threading support via the OpenMP library."
+
+build() {
+    cd glmark2
+    python2 ./waf configure --with-flavors x11-gl --prefix=$pkgdir
+    python2 ./waf build
+}
+
+install() {
+    cd glmark2
+    python2 ./waf install
+}
+
+run_benchmark() {
+    PATH=./bin:$PATH glmark2
+}
