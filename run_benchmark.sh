@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if ! [ $(id -u) = 0 ]; then
-	echo "This script must be run as root" 1>&2
-	exit 1
-fi
 base_dir=$(pwd)
 
 usage() {
@@ -69,7 +65,7 @@ create_srcpackage() {
 
 while [ $# -gt 0 ]; do
 	case "$1" in
-		--from-source)   SOURCE=1;;
+	--from-source)   SOURCE=1;;
         -l|--list)       list_bm; exit 0;;
         -h|--help)       usage; exit 0;;
 

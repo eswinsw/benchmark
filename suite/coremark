@@ -8,7 +8,7 @@ build() {
 
 run_benchmark() {
     make clean
-    make XCFLAGS="-DMULTITHREAD=$@ -DUSE_PTHREAD -lpthread"
+    make XCFLAGS="-DMULTITHREAD=$@ -DUSE_PTHREAD -pthread"
 }
 
 parse_result() {
