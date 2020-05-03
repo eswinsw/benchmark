@@ -1,0 +1,16 @@
+bmname=coremark-sifive
+description="CoreMark's primary goals are simplicity and providing a method for testing only a processor's core features."
+source=("https://github.com/sifive/benchmark-coremark.git")
+arguments=('1' '8')
+build() {
+    cd benchmark-coremark
+}
+
+run_benchmark() {
+    make clean
+    make XCFLAGS="-DMULTITHREAD=$@ -DUSE_PTHREAD -pthread"
+}
+
+parse_result() {
+    tail -n 1 run1.log
+}

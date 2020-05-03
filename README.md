@@ -24,6 +24,7 @@ A benchmarking suite script for RISC-V.
 |ebizzy|A program to generate workloads resembling web server workloads.|
 |iperf| Network performance benchmark for kernel and NIC.|
 |CorMark|CoreMark's primary goals are simplicity and providing a method for testing only a processor's core features.|
+|CoreMark-sifive|Sifive maintains its own version of the CoreMark benchmark. It produces higher scores than the official CoreMark.|
 |CoreMark-PRO|EEMBC CoreMark-PRO. Five prevalent integer workloads and four popular floating-point workloads.|
 |embench|A suite of free and open source C benchmarks for embedded systems|
 |glmark2|OpenGL 2.0 and ES 2.0 benchmark|
