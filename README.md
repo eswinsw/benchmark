@@ -28,3 +28,20 @@ A benchmarking suite script for RISC-V.
 |CoreMark-PRO|EEMBC CoreMark-PRO. Five prevalent integer workloads and four popular floating-point workloads.|
 |embench|A suite of free and open source C benchmarks for embedded systems|
 |glmark2|OpenGL 2.0 and ES 2.0 benchmark|
+
+
+## Notes
+
+### Compiling sifive coremark on ARM platforns
+When compliing for 64bit with
+
+```
+$ make PORT_DIR=linux64
+```
+
+The resulting binary produces some error messages. It can be fixed by making the following changes in linux64/core_portme.h
+
+```
+/* typedef unsigned long long ee_ptr_int; */
+typedef ee_u32 ee_ptr_int;
+```
